@@ -6,8 +6,30 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const menuRouter = require('./routes/menuRouter');
+const dishRouter = require('./routes/dishRouter');
+const eventRouter = require('./routes/eventRouter');
+const partnerRouter = require('./routes/partnerRouter');
+
+const mongoose = require('mongoose');
+
+const url = 'mongodb://localhost:27017/cafeserver';
+const connect = mongoose.connect(url, {
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+});
+
+connect.then(() => console.log('Connected correctly to server'), 
+    err => console.log(err)
+);
 
 var app = express();
+app.use('/menus', menuRouter);
+app.use('/dishes', dishRouter);
+app.use('/events', eventRouter);
+app.use('/partners', partnerRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -1,0 +1,29 @@
+Sample Documents
+
+// Menu
+
+{
+  "menus": [
+{
+    "_id": "Breakfast",
+    "name": "Breakfast Menu",
+    "image": "images/breakfast_dish.jpg",
+    "featured": true,
+    "description": "See what we've got cooking up for breakfast!"
+},
+{
+    "_id": "Lunch",
+    "name": "Lunch Menu",
+    "image": "images/lunch_dish.jpg",
+    "featured": true,
+    "description": "Explore our lunch menu!"
+},
+{
+    "_id": "Beverages",
+    "name": "Drinks Menu",
+    "image": "images/beverages.jpg",
+    "featured": true,
+    "description": "Coffee, tea or something stronger?"
+}
+],
+}
