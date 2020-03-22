@@ -1,25 +1,32 @@
 Sample Documents
 
-// Menu
+// MENUS
 
 {
   "menus": [
 {
-    "_id": "Breakfast",
+    "_id": "breakfast",
     "name": "Breakfast Menu",
     "image": "images/breakfast_dish.jpg",
     "featured": true,
     "description": "See what we've got cooking up for breakfast!"
 },
 {
-    "_id": "Lunch",
+    "_id": "lunch",
     "name": "Lunch Menu",
     "image": "images/lunch_dish.jpg",
     "featured": true,
     "description": "Explore our lunch menu!"
 },
 {
-    "_id": "Beverages",
+    "_id": "dinner",
+    "name": "Dinner Menu",
+    "image": "images/beverages.jpg",
+    "featured": true,
+    "description": "Coffee, tea or something stronger?"
+},
+{
+    "_id": "beverages",
     "name": "Drinks Menu",
     "image": "images/beverages.jpg",
     "featured": true,
@@ -27,3 +34,72 @@ Sample Documents
 }
 ],
 }
+
+//DISHES
+{
+	"dishes": [
+{
+	"name": "Avocado Toast",
+        "image": "images/avocado_toast.jpg",  
+        "featured": true,
+	"cost": 9.00,
+        "description": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery.",
+        "allergy": "Gluten, Soy",
+        "menu_id": "breakfast"	
+},
+{
+	"name": "Quinoa Beet and Lentil Burger",
+        "image": "images/quinoa_burger.jpg",  
+        "featured": true,
+	"cost": 11.00,
+        "description": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery.",
+        "allergy": "Gluten, Nuts",
+        "menu_id": "lunch"	
+},
+{
+	"name": "Buddha Bowl",
+        "image": "images/buddha_bowl.jpg",  
+        "featured": true,
+	"cost": 13.00,
+        "description": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery.",
+        "allergy": "Nuts, Soy",
+        "menu_id": "dinner"	
+},
+{
+	"name": "Plant Milk Latte",
+        "image": "images/latte.jpg",  
+        "featured": true,
+	"cost": 3.99,
+        "description": "Roast body dark barista body",
+        "allergy": "None",
+        "menu_id": "beverages"	
+}
+],
+}
+
+//PARTNERS
+{
+	"partners": [
+{
+	"name": "NutritionFacts.Org",
+	"image": "images/nutrition_facts_org_photo.png",
+	"featured": true,
+	"description": "Nutrition information at it's best!"
+},
+{
+	"name": "Plant Pure Nation",
+        "image": "images/plant_pure_nation.png",
+        "featured": true,
+        "description": "Get connected in our community with like-minded
+	people who want to learn all about eating and living healthfully."
+},
+{
+        "name": "PCRM",
+        "image": "images/pcrm.png",
+        "featured": true,
+        "description": "A resource for all, and especially physicians. See how you can get involved!"
+}
+],
+}
+
+

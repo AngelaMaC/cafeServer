@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 require('mongoose-currency').loadType(mongoose);
 const Currency = mongoose.Types.Currency;
 
-const dishSchema = new Schema({
+const eventSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -27,11 +27,7 @@ const dishSchema = new Schema({
         type: String,
         required: true
     },
-    allergy: {
-        type: String,
-        required: true
-    },
-    menu_id: {
+    location: {
         type: String,
         required: true
     },
@@ -40,6 +36,6 @@ const dishSchema = new Schema({
     timestamps: true
 });
 
-const Dish = mongoose.model('Dish', dishSchema);
+const Event = mongoose.model('Event', eventSchema);
 
-module.exports = Dish;
+module.exports = Event;
