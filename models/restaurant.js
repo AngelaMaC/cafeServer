@@ -4,19 +4,38 @@ const Schema = mongoose.Schema;
 require('mongoose-currency').loadType(mongoose);
 const Currency = mongoose.Types.Currency;
 
-const eventSchema = new Schema({
+const reviewSchema = new Schema({
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true
+    },
+    text: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
+}, {
+    timestamps: true
+});
+
+const restaurantSchema = new Schema({
     name: {
         type: String,
         required: true,
         unique: true
-    },    
+    },
     image: {
         type: String,
         required: true
     },
     featured: {
         type: Boolean,
-        required: false
+        default: false
     },
     cost: {
         type: Currency,
@@ -26,16 +45,13 @@ const eventSchema = new Schema({
     description: {
         type: String,
         required: true
-    },
-    location: {
-        type: String,
-        required: true
-    },
+    },   
     
+    reviews: [reviewSchema]
 }, {
     timestamps: true
 });
 
-const Event = mongoose.model('Event', eventSchema);
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 
-module.exports = Event;
+module.exports = Restaurant;

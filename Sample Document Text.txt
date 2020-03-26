@@ -1,32 +1,39 @@
 Sample Documents
+Article referencing why I am using id in addition to the mongoose _id: 
+https://docs.mongodb.com/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/
+
+UPDATE 3/26 decided to change my project to be a restaurant review site so that I utilize the restaurants instead of campsites and can use comments. 
+This replaces my menus and dishes. I have saved this in a new document.
+
+
 
 // MENUS
 
 {
   "menus": [
 {
-    "_id": "breakfast",
+    "id": "breakfast",
     "name": "Breakfast Menu",
     "image": "images/breakfast_dish.jpg",
     "featured": true,
     "description": "See what we've got cooking up for breakfast!"
 },
 {
-    "_id": "lunch",
+    "id": "lunch",
     "name": "Lunch Menu",
     "image": "images/lunch_dish.jpg",
     "featured": true,
     "description": "Explore our lunch menu!"
 },
 {
-    "_id": "dinner",
+    "id": "dinner",
     "name": "Dinner Menu",
     "image": "images/beverages.jpg",
     "featured": true,
     "description": "Coffee, tea or something stronger?"
 },
 {
-    "_id": "beverages",
+    "id": "beverages",
     "name": "Drinks Menu",
     "image": "images/beverages.jpg",
     "featured": true,

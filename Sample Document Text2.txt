@@ -1,0 +1,183 @@
+{
+  "restaurants": [
+    {
+      "name": "Healthy Steps Cafe",
+      "image": "images/healthy-steps.jpg",
+      "featured": false,
+      "cost": 65,
+      "description": "Beetroot water spinach okra water chestnut ricebean pea catsear courgette summer purslane. Water spinach arugula pea tatsoi aubergine spring onion bush tomato kale radicchio turnip chicory salsify pea sprouts.",
+      "comments": [
+        {
+          "rating": 5,
+          "text": "What a great dish!",
+          "author": "Sally Sandwich",
+          "date": "2018-10-25T16:30Z"
+        },
+        {
+          "rating": 4,
+          "text": "Best dish ever.",
+          "author": "Brennen Ech",
+          "date": "2017-06-17T03:33Z"
+        },
+        {
+          "rating": 5,
+          "text": "Love the tacos.",
+          "author": "McKenzie Sebastian",
+          "date": "2019-02-18T18:12Z"
+        },
+        {
+          "rating": 5,
+          "text": "Coffee is excellent.",
+          "author": "Jordan Runn",
+          "date": "2019-08-04T20:11Z"
+        },
+        {
+          "rating": 4,
+          "text": "Save room for dessert!",
+          "author": "Ann Dabramov",
+          "date": "2018-07-23T19:44Z"
+        }
+      ]
+    },
+    {
+      "name": "Wisdom Bakery",
+      "image": "images/wisdom-bakery.jpg",
+      "elevation": 877,
+      "featured": false,
+      "cost": 77,
+      "description": "Beetroot water spinach okra water chestnut ricebean pea catsear courgette summer purslane.",
+      "comments": [
+        {
+          "rating": 5,
+          "text": "What a great dish!",
+          "author": "Sally Says",
+          "date": "2018-10-25T16:30Z"
+        },
+        {
+          "rating": 4,
+          "text": "Best dish ever.",
+          "author": "Brennen Ech",
+          "date": "2017-06-17T03:33Z"
+        },
+        {
+          "rating": 5,
+          "text": "Love the tacos.",
+          "author": "McKenzie Sebastian",
+          "date": "2019-02-18T18:12Z"
+        },
+        {
+          "rating": 5,
+          "text": "Coffee is excellent.",
+          "author": "Jordan Runn",
+          "date": "2019-08-04T20:11Z"
+        },
+        {
+          "rating": 4,
+          "text": "Save room for dessert!",
+          "author": "Ann Dabramov",
+          "date": "2018-07-23T19:44Z"
+        }
+      ]
+    },
+    {
+      "name": "Chef Kenny's",
+      "image": "images/chef-kennys.jpg",
+      "elevation": 2901,
+      "featured": false,
+      "cost": 24,
+      "description": "Vegan asian food at it's finest!",
+      "comments": [
+        {
+          "rating": 5,
+          "text": "What a great dish!",
+          "author": "Sally Says",
+          "date": "2018-10-25T16:30Z"
+        },
+        {
+          "rating": 4,
+          "text": "Best dish ever.",
+          "author": "Brennen Ech",
+          "date": "2017-06-17T03:33Z"
+        },
+        {
+          "rating": 5,
+          "text": "Love the sushi.",
+          "author": "McKenzie Sebastian",
+          "date": "2019-02-18T18:12Z"
+        },
+        {
+          "rating": 5,
+          "text": "Bubble tea is excellent.",
+          "author": "Jordan Runn",
+          "date": "2019-08-04T20:11Z"
+        },
+        {
+          "rating": 4,
+          "text": "Save room for dessert!",
+          "author": "Ann Dabramov",
+          "date": "2018-07-23T19:44Z"
+        }
+      ]
+    },
+    {
+      "name": "The Beer Plant",
+      "image": "images/redux-woods.jpg",
+      "elevation": 42,
+      "featured": true,
+      "cost": 55,
+      "description": "Beer. Plants.",
+      "comments": [
+        {
+          "rating": 5,
+          "text": "What a great dish!",
+          "author": "Sally Says",
+          "date": "2018-10-25T16:30Z"
+        },
+        {
+          "rating": 4,
+          "text": "Best dish ever.",
+          "author": "Brennen Ech",
+          "date": "2017-06-17T03:33Z"
+        },
+        {
+          "rating": 5,
+          "text": "Love the tacos.",
+          "author": "McKenzie Sebastian",
+          "date": "2019-02-18T18:12Z"
+        },
+        {
+          "rating": 5,
+          "text": "Coffee is excellent.",
+          "author": "Jordan Runn",
+          "date": "2019-08-04T20:11Z"
+        },
+        {
+          "rating": 4,
+          "text": "Save room for dessert!",
+          "author": "Ann Dabramov",
+          "date": "2018-07-23T19:44Z"
+        }
+      ]
+    }
+  ],
+  "partners": [
+    {
+      "name": "NutritionFacts.Org",
+      "image": "images/nutrition_facts_org_photo.png",
+      "featured": true,
+      "description": "Nutrition information at it's best!"
+    },
+    {
+	    "name": "Plant Pure Nation",
+      "image": "images/plant_pure_nation.png",
+      "featured": true,
+      "description": "Get connected in our community with like-minded people who want to learn all about eating and living healthfully."
+    },
+    {
+        "name": "PCRM",
+        "image": "images/pcrm.png",
+        "featured": true,
+        "description": "A resource for all, and especially physicians. See how you can get involved!"
+    }
+  ]
+}

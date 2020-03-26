@@ -1,19 +1,18 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const passport = require('passport');
+const config = require('./config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const menuRouter = require('./routes/menuRouter');
-const dishRouter = require('./routes/dishRouter');
-const eventRouter = require('./routes/eventRouter');
+const restaurantRouter = require('./routes/restaurantRouter');
 const partnerRouter = require('./routes/partnerRouter');
 
 const mongoose = require('mongoose');
 
-const url = 'mongodb://localhost:27017/cafeserver';
+const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
     useCreateIndex: true,
     useFindAndModify: false,
@@ -26,10 +25,6 @@ connect.then(() => console.log('Connected correctly to server'),
 );
 
 var app = express();
-app.use('/menus', menuRouter);
-app.use('/dishes', dishRouter);
-app.use('/events', eventRouter);
-app.use('/partners', partnerRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,11 +33,17 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(cookieParser());
+
+app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/restaurants', restaurantRouter);
+app.use('/partners', partnerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
