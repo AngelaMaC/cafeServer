@@ -10,6 +10,7 @@ restaurantRouter.use(bodyParser.json());
 restaurantRouter.route('/')
 .get((req, res, next) => {
     Restaurant.find()
+    .populate('reviews.author')
     .then(restaurants => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -44,6 +45,7 @@ restaurantRouter.route('/')
 restaurantRouter.route('/:restaurantId')
 .get((req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
+    .populate('reviews.author')
     .then(restaurant => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -81,6 +83,7 @@ restaurantRouter.route('/:restaurantId')
 restaurantRouter.route('/:restaurantId/reviews')
 .get((req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
+    .populate('reviews.author')
     .then(restaurant => {
         if (restaurant) {
             res.statusCode = 200;
@@ -96,6 +99,7 @@ restaurantRouter.route('/:restaurantId/reviews')
 })
 .post(authenticate.verifyUser,(req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
+    .populate('reviews.author')
     .then(restaurant => {
         if (restaurant) {
             restaurant.reviews.push(req.body);
@@ -144,6 +148,7 @@ restaurantRouter.route('/:restaurantId/reviews')
 restaurantRouter.route('/:restaurantId/reviews/:reviewId')
 .get((req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
+    .populate('reviews.author')
     .then(restaurant => {
         if (restaurant && restaurant.reviews.id(req.params.reviewId)) {
             res.statusCode = 200;

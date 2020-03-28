@@ -179,5 +179,31 @@
         "featured": true,
         "description": "A resource for all, and especially physicians. See how you can get involved!"
     }
+  ],
+  "events": [
+    {
+      "name": "5k Fun Run",
+      "image": "images/5k.png",
+      "featured": true,
+      "cost": 25,
+      "description": "5K run for fun!",
+      "location": Houston TX,
+    },
+    {
+	    "name": "5k Fun Run",
+      "image": "images/5k.png",
+      "featured": true,
+      "cost": 25,
+      "description": "5K run for fun!",
+      "location": Houston TX,
+    },
+    {
+      "name": "5k Fun Run",
+      "image": "images/5k.png",
+      "featured": true,
+      "cost": 25,
+      "description": "5K run for fun!",
+      "location": Houston TX,
+    }
   ]
 }

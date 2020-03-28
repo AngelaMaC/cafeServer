@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const restaurantRouter = require('./routes/restaurantRouter');
 const partnerRouter = require('./routes/partnerRouter');
+const eventRouter = require('./routes/eventRouter');
 
 const mongoose = require('mongoose');
 
