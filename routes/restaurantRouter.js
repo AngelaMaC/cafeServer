@@ -2,13 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Restaurant = require('../models/restaurant');
 const authenticate = require('../authenticate');
+const cors = require('./cors');
 
 const restaurantRouter = express.Router();
 
 restaurantRouter.use(bodyParser.json());
 
 restaurantRouter.route('/')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, (req, res, next) => {
     Restaurant.find()
     .populate('reviews.author')
     .then(restaurants => {
@@ -18,7 +20,7 @@ restaurantRouter.route('/')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.create(req.body)
     .then(restaurant => {
         console.log('restaurant Created ', restaurant);
@@ -28,11 +30,11 @@ restaurantRouter.route('/')
     })
     .catch(err => next(err));
 })
-.put(authenticate.verifyUser,(req, res) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /restaurants');
 })
-.delete(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.deleteMany()
     .then(response => {
         res.statusCode = 200;
@@ -43,7 +45,8 @@ restaurantRouter.route('/')
 });
 
 restaurantRouter.route('/:restaurantId')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .populate('reviews.author')
     .then(restaurant => {
@@ -53,11 +56,11 @@ restaurantRouter.route('/:restaurantId')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser,(req, res) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /restaurants/${req.params.restaurantId}`);
 })
-.put(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findByIdAndUpdate(req.params.restaurantId, {
         $set: req.body
     }, { new: true })
@@ -68,7 +71,7 @@ restaurantRouter.route('/:restaurantId')
     })
     .catch(err => next(err));
 })
-.delete(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findByIdAndDelete(req.params.restaurantId)
     .then(response => {
         res.statusCode = 200;
@@ -81,7 +84,8 @@ restaurantRouter.route('/:restaurantId')
 //Reviews
 
 restaurantRouter.route('/:restaurantId/reviews')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .populate('reviews.author')
     .then(restaurant => {
@@ -97,7 +101,7 @@ restaurantRouter.route('/:restaurantId/reviews')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser,(req, res, next) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .populate('reviews.author')
     .then(restaurant => {
@@ -118,11 +122,11 @@ restaurantRouter.route('/:restaurantId/reviews')
     })
     .catch(err => next(err));
 })
-.put(authenticate.verifyUser,(req, res) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.statusCode = 403;
     res.end(`PUT operation not supported on /restaurants/${req.params.restaurantId}/reviews`);
 })
-.delete(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .then(restaurant => {
         if (restaurant) {
@@ -146,7 +150,8 @@ restaurantRouter.route('/:restaurantId/reviews')
 });
 
 restaurantRouter.route('/:restaurantId/reviews/:reviewId')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .populate('reviews.author')
     .then(restaurant => {
@@ -166,11 +171,11 @@ restaurantRouter.route('/:restaurantId/reviews/:reviewId')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser,(req, res) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /restaurants/${req.params.restaurantId}/reviews/${req.params.reviewId}`);
 })
-.put(authenticate.verifyUser,(req, res, next) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .then(restaurant => {
         if (restaurant && restaurant.reviews.id(req.params.reviewId)) {
@@ -200,7 +205,7 @@ restaurantRouter.route('/:restaurantId/reviews/:reviewId')
     .catch(err => next(err));
 })
 
-.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .then(restaurant => {
         if (!restaurant || !restaurant.comments.id(req.params.commentId)) {

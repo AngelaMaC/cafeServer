@@ -2,13 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Event = require('../models/event');
 const authenticate = require('../authenticate');
+const cors = require('./cors');
 
 const eventRouter = express.Router();
 
 eventRouter.use(bodyParser.json());
 
 eventRouter.route('/')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, (req, res, next) => {
     Event.find()
     .then(events => {
         res.statusCode = 200;
@@ -17,7 +19,7 @@ eventRouter.route('/')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser, (req, res, next) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Event.create(req.body)
     .then(event => {
         console.log('event Created ', event);
@@ -27,7 +29,7 @@ eventRouter.route('/')
     })
     .catch(err => next(err));
 })
-.put(authenticate.verifyUser, (req, res, next) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Event.findByIdAndUpdate(req.params.eventId, {
         $set: req.body
     }, { new: true })
@@ -38,7 +40,7 @@ eventRouter.route('/')
     })
     .catch(err => next(err));
 })
-.delete(authenticate.verifyUser, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Event.deleteMany()
     .then(response => {
         res.statusCode = 200;
@@ -49,7 +51,8 @@ eventRouter.route('/')
 });
 
 eventRouter.route('/:eventId')
-.get((req, res, next) => {
+.options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+.get(cors.cors, (req, res, next) => {
     Event.findById(req.params.eventId)
     .then(event => {
         res.statusCode = 200;
@@ -58,11 +61,11 @@ eventRouter.route('/:eventId')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser, (req, res) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /events/${req.params.eventId}`);
 })
-.put(authenticate.verifyUser, (req, res, next) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Event.findByIdAndUpdate(req.params.eventId, {
         $set: req.body
     }, { new: true })
@@ -73,7 +76,7 @@ eventRouter.route('/:eventId')
     })
     .catch(err => next(err));
 })
-.delete(authenticate.verifyUser, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Event.findByIdAndDelete(req.params.eventId)
     .then(response => {
         res.statusCode = 200;
