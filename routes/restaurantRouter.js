@@ -18,7 +18,7 @@ restaurantRouter.route('/')
     })
     .catch(err => next(err));
 })
-.post(authenticate.verifyUser,(req, res, next) => {
+.post(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.create(req.body)
     .then(restaurant => {
         console.log('restaurant Created ', restaurant);
@@ -32,7 +32,7 @@ restaurantRouter.route('/')
     res.statusCode = 403;
     res.end('PUT operation not supported on /restaurants');
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+.delete(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.deleteMany()
     .then(response => {
         res.statusCode = 200;
@@ -57,7 +57,7 @@ restaurantRouter.route('/:restaurantId')
     res.statusCode = 403;
     res.end(`POST operation not supported on /restaurants/${req.params.restaurantId}`);
 })
-.put(authenticate.verifyUser,(req, res, next) => {
+.put(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findByIdAndUpdate(req.params.restaurantId, {
         $set: req.body
     }, { new: true })
@@ -68,7 +68,7 @@ restaurantRouter.route('/:restaurantId')
     })
     .catch(err => next(err));
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+.delete(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findByIdAndDelete(req.params.restaurantId)
     .then(response => {
         res.statusCode = 200;
@@ -122,7 +122,7 @@ restaurantRouter.route('/:restaurantId/reviews')
     res.statusCode = 403;
     res.end(`PUT operation not supported on /restaurants/${req.params.restaurantId}/reviews`);
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+.delete(authenticate.verifyUser,authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .then(restaurant => {
         if (restaurant) {
@@ -199,11 +199,18 @@ restaurantRouter.route('/:restaurantId/reviews/:reviewId')
     })
     .catch(err => next(err));
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+
+.delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
     .then(restaurant => {
-        if (restaurant && restaurant.reviews.id(req.params.reviewId)) {
-            restaurant.reviews.id(req.params.reviewId).remove();
+        if (!restaurant || !restaurant.comments.id(req.params.commentId)) {
+            err = new Error(`Review ${req.params.commentId} not found.`);
+            err.status = 404;
+            return next(err);
+        }
+        const comment = restaurant.comments.id(req.params.commentId);
+        if (restaurant && comment.author._id.equals(req.user._id)) {
+            restaurant.comments.id(req.params.commentId).remove();
             restaurant.save()
             .then(restaurant => {
                 res.statusCode = 200;
@@ -211,17 +218,37 @@ restaurantRouter.route('/:restaurantId/reviews/:reviewId')
                 res.json(restaurant);
             })
             .catch(err => next(err));
-        } else if (!restaurant) {
-            err = new Error(`restaurant ${req.params.restaurantId} not found`);
-            err.status = 404;
-            return next(err);
         } else {
-            err = new Error(`review ${req.params.reviewId} not found`);
-            err.status = 404;
+            res.statusCode = 403;
+            res.end('You are not authorized to delete this review.');
             return next(err);
         }
     })
     .catch(err => next(err));
 });
+// .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+//     Restaurant.findById(req.params.restaurantId)
+//     .then(restaurant => {
+//         if (restaurant && restaurant.reviews.id(req.params.reviewId)) {
+//             restaurant.reviews.id(req.params.reviewId).remove();
+//             restaurant.save()
+//             .then(restaurant => {
+//                 res.statusCode = 200;
+//                 res.setHeader('Content-Type', 'application/json');
+//                 res.json(restaurant);
+//             })
+//             .catch(err => next(err));
+//         } else if (!restaurant) {
+//             err = new Error(`restaurant ${req.params.restaurantId} not found`);
+//             err.status = 404;
+//             return next(err);
+//         } else {
+//             err = new Error(`review ${req.params.reviewId} not found`);
+//             err.status = 404;
+//             return next(err);
+//         }
+//     })
+//     .catch(err => next(err));
+// });
 
 module.exports = restaurantRouter;
